@@ -25,6 +25,9 @@ Using it in tests
 **Warning: Currently it's not advisable to use the `EmbeddedCassandraLoader`
 for concurrent tests.**
 
+**Warning: Under windows `tearDownCassandra()` will terminate the JVM. See
+[Running under Windows](#running-under-windows) for futher details.**
+
 TestNG example:
 
 ```java
@@ -77,6 +80,37 @@ public class MyTest {
   }
 }
 ```
+
+
+Running under Windows
+---------------------
+
+Under Windows Cassandra terminates the whole JVM when stopping the Cassandra
+daemon. That means running `tearDownCassandra()` will kill the JVM, something
+that at least TestNG is not happy about.
+
+As a workaround tear down can be skipped, leaving the daemon running.
+Consequentially only one test using Cassandra can be run in single test suite
+and files created by Cassandra during tests will not be removed. In a mixed
+environment the tear down can be called conditionally:
+
+```
+  ...
+  
+  @AfterClass(alwaysRun = true)
+  public void tearDown() throws Exception {
+    session.close();
+    cluster.close();
+    if (!FBUtilities.isWindows()) { // cassandra does the same check to decide wether to kill the JVM or not
+      EmbeddedCassandraLoader.tearDownCassandra();
+    }
+  }
+
+  ...
+```
+
+There are plans to allow runing Cassandra in a separate process which would
+fix this issue. 
 
 
 License
