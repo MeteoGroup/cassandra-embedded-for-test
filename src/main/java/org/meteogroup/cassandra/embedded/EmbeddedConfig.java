@@ -30,6 +30,7 @@ import org.apache.cassandra.locator.SimpleSnitch;
 import org.apache.cassandra.scheduler.RoundRobinScheduler;
 
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.nio.file.Path;
 import java.util.Collections;
 
@@ -47,7 +48,7 @@ public class EmbeddedConfig extends Config {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
+    setupFreePorts();
     memtable_allocation_type = heap_buffers;
     commitlog_sync = batch;
     commitlog_sync_batch_window_in_ms = 1.0;
@@ -69,5 +70,21 @@ public class EmbeddedConfig extends Config {
     row_cache_size_in_mb = 64;
     enable_user_defined_functions = true;
     enable_scripted_user_defined_functions = true;
+  }
+
+  private void setupFreePorts() {
+    try (
+        final ServerSocket rpcSocket = new ServerSocket(0);
+        final ServerSocket storageSocket = new ServerSocket(0);
+        final ServerSocket storageSSLSocket = new ServerSocket(0);
+        final ServerSocket nativeTransportSocket = new ServerSocket(0);
+    ) {
+      rpc_port = rpcSocket.getLocalPort();
+      storage_port = storageSocket.getLocalPort();
+      ssl_storage_port = storageSSLSocket.getLocalPort();
+      native_transport_port = nativeTransportSocket.getLocalPort();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

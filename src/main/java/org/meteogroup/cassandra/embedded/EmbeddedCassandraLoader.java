@@ -33,7 +33,11 @@ public class EmbeddedCassandraLoader {
 
   protected static CassandraDaemon cassandraDaemon;
   protected static String cassandraHost;
+  protected static int cassandraRpcPort;
   protected static int cassandraNativePort;
+  protected static int cassandraNativeSSLPort;
+  protected static int cassandraStoragePort;
+  protected static int cassandraStorageSSLPort;
 
   public static void setupCassandra() throws Exception {
     System.setProperty("cassandra.config.loader", EmbeddedConfigurationLoader.class.getCanonicalName());
@@ -42,7 +46,11 @@ public class EmbeddedCassandraLoader {
     cassandraDaemon.start();
 
     cassandraHost = DatabaseDescriptor.getRpcAddress().getHostName();
+    cassandraRpcPort = DatabaseDescriptor.getRpcPort();
     cassandraNativePort = DatabaseDescriptor.getNativeTransportPort();
+    cassandraNativeSSLPort = DatabaseDescriptor.getNativeTransportPort();
+    cassandraStoragePort = DatabaseDescriptor.getStoragePort();
+    cassandraStorageSSLPort = DatabaseDescriptor.getSSLStoragePort();
   }
 
   public static void tearDownCassandra() throws IOException {
