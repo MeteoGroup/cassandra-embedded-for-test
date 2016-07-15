@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.meteogroup.cassandra.embedded;
+package org.meteogroup.cassandra.embedded;
 
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.querybuilder.Select;

@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 */
-package com.meteogroup.cassandra.embedded;
+package org.meteogroup.cassandra.embedded;
 
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.service.CassandraDaemon;
