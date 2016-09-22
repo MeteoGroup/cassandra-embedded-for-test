@@ -24,6 +24,7 @@ package org.meteogroup.cassandra.embedded;
 
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.service.CassandraDaemon;
+import org.apache.cassandra.utils.FBUtilities;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -57,7 +58,25 @@ public class EmbeddedCassandraLoader {
     cassandraHost = null;
     cassandraNativePort = -1;
     if (cassandraDaemon != null) {
-      cassandraDaemon.stop();
+      final SecurityManager securityManager = System.getSecurityManager();
+      final SecurityException exitDenied = new SecurityException();
+      try {
+        if (FBUtilities.isWindows()) {
+          System.setSecurityManager(new SecurityManagerDecorator(securityManager) {
+            @Override
+            public void checkExit(int status) {
+              throw exitDenied;
+            }
+          });
+        }
+        cassandraDaemon.stop();
+      } catch (SecurityException e) {
+        if (e == exitDenied) {
+          System.setSecurityManager(securityManager);
+        } else {
+          throw e;
+        }
+      }
     }
 
     EmbeddedConfigurationLoader.reset();
