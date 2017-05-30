@@ -41,8 +41,8 @@ public class EmbeddedCassandraLoader {
 
   public static void setupCassandra() throws Exception {
     System.setProperty("cassandra.config.loader", EmbeddedConfigurationLoader.class.getCanonicalName());
-    cassandraDaemon = new CassandraDaemon();
-    cassandraDaemon.init(null);
+    cassandraDaemon = new CassandraDaemon(true);
+    cassandraDaemon.activate();
     cassandraDaemon.start();
 
     cassandraHost = DatabaseDescriptor.getRpcAddress().getHostName();
@@ -57,7 +57,7 @@ public class EmbeddedCassandraLoader {
     cassandraHost = null;
     cassandraNativePort = -1;
     if (cassandraDaemon != null) {
-      cassandraDaemon.stop();
+      cassandraDaemon.deactivate();
     }
 
     EmbeddedConfigurationLoader.reset();

@@ -59,6 +59,7 @@ public class EmbeddedConfig extends Config {
     start_native_transport = true;
     saved_caches_directory = datadir.resolve("saved_caches").toString();
     data_file_directories = new String[] {datadir.toString()};
+    cdc_raw_directory = datadir.toString();
     seed_provider = new ParameterizedClass(SimpleSeedProvider.class.getCanonicalName(), Collections.singletonMap("seeds", "127.0.0.1"));
     endpoint_snitch = SimpleSnitch.class.getCanonicalName();
     dynamic_snitch = true;

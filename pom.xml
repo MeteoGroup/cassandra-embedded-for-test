@@ -35,47 +35,36 @@
     <dependency>
       <groupId>org.apache.cassandra</groupId>
       <artifactId>cassandra-all</artifactId>
-      <version>3.5</version>
+      <version>3.10</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>18.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.caffinitas.ohc</groupId>
-      <artifactId>ohc-core</artifactId>
-      <version>0.4.2</version>
+      <version>21.0</version>
     </dependency>
 
     <dependency>
       <groupId>com.datastax.cassandra</groupId>
       <artifactId>cassandra-driver-core</artifactId>
-      <version>3.0.0</version>
+      <version>3.2.0</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.guava</groupId>
-          <artifactId>guava</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.18</version>
+      <version>1.7.25</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.9.10</version>
+      <version>6.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.assertj</groupId>
-      <artifactId>assertj-core-java8</artifactId>
-      <version>1.0.0m1</version>
+      <artifactId>assertj-core</artifactId>
+      <version>3.7.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
